@@ -9,6 +9,12 @@
     z-index: 2 !important;
 }
 
+.chat-panel {
+    display: none;
+    position: fixed;
+    width: 400px;
+}
+
 .leaflet-google-layer {
     z-index: 1 !important;
 }
