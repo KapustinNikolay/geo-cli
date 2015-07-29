@@ -1,0 +1,25 @@
+#map {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.leaflet-map-pane {
+    z-index: 2 !important;
+}
+
+.leaflet-google-layer {
+    z-index: 1 !important;
+}
+#button {
+    position: fixed;
+    top: 100px;
+    left: 15px;
+}
+
+.hidden-element {
+    z-index: 100;
+    position: fixed;
+    top: -100px;
+}

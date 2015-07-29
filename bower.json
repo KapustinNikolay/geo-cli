@@ -1,0 +1,21 @@
+{
+  "name": "aaa",
+  "version": "0.0.0",
+  "authors": [
+    "nikolay <jetrok@yandex.ru>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jQuery": "~2.1.4",
+    "knockout": "~3.3.0",
+    "leaflet": "~0.7.3",
+    "bootstrap": "~3.3.5"
+  }
+}
