@@ -4,12 +4,14 @@
 var MapManager = function() {
   this.map = null;
   this.markers = [];
+  this.markerInAction = false;
 };
 
 MapManager.prototype.init = function() {
   this.map = L.map('map',{
     center: [45.059, 39.005],
     zoom: 15,
+    zoomControl: false,
     doubleClickZoom: false
   });
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
@@ -17,26 +19,28 @@ MapManager.prototype.init = function() {
 
   this.myIcon = L.icon({
     iconUrl: 'bower_components/leaflet/dist/images/marker-icon.png',
-    iconRetinaUrl: './../bower_components/leaflet/dist/images/marker-icon-2x.png',
-    iconSize: [45, 75],
-    iconAnchor: [22, 94],
-    popupAnchor: [-3, -120],
+    iconRetinaUrl: './../bower_components/leaflet/dist/images/marker-icon.png',
+    iconSize: [35, 55],
+    iconAnchor: [18, 68],
+    popupAnchor: [0, -65]/*,
     shadowUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
     shadowRetinaUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
-    shadowSize: [68, 95],
-    shadowAnchor: [22, 112]
+    shadowSize: [68, 75],
+    shadowAnchor: [22, 82]*/
   });
 
 };
 
-MapManager.prototype.addMarker = function(e, context) {
-  $(context).off('click');
+MapManager.prototype.addMarker = function(latlng, theme) {
+  if (this.markerInAction) return false;
+  this.markerInAction = true;
   var self = this;
   var map = this.map;
-  var point = L.point(e.pageX, e.pageY);
-  var latlng = map.layerPointToLatLng(point);
+  this.markers.forEach(function(i) {
+    map.removeLayer(i);
+  });
 
-  var popup = L.popup().setContent('<p>здеся пьют девятку!!!!</p>');
+  var popup = L.popup().setContent('<p>' + theme + '</p>');
 
   var marker = L.marker(latlng, {
     draggable: true,
@@ -52,10 +56,12 @@ MapManager.prototype.addMarker = function(e, context) {
   }
 
   function clickOnMap(e) {
+    self.markerInAction = false;
     marker.dragging.disable();
-    this.off('mousemove');
-    $(context).on('click', function(e) {
-      self.addMarker(e, this);
+    map.off('mousemove');
+
+    self.markers.forEach(function(i) {
+      i.addTo(map);
     });
   }
 
@@ -65,21 +71,27 @@ MapManager.prototype.addMarker = function(e, context) {
     element.removeClass('chat-panel-vis').css({
       left: '-50px',
       top: '-50px'
-    })
+    });
+    $('#map, .fixed-block').removeClass('blur');
   }
 
   function openPopup(e) {
-    var x = e.originalEvent.pageX;
-    var y = e.originalEvent.pageY;
+    map.panTo(e.latlng);
+    setTimeout(function() {
+      var body = $('body');
+      var x = body.width() / 2;
+      var y = body.height() / 2;
 
-    element.css({
-      'top': y - element.outerHeight() / 2 + 'px',
-      'left': x - element.width() / 2 + 'px'
-    }).addClass('chat-panel-vis');
+      element.css({
+        'top': y + element.outerHeight() / 2 + 'px',
+        'left': x - element.width() / 2 + 'px'
+      }).addClass('chat-panel-vis');
 
-    map.dragging.disable();
-    map.scrollWheelZoom.disable();
-    map.on('click', closePopup);
+      map.dragging.disable();
+      map.scrollWheelZoom.disable();
+      $('#map, .fixed-block').addClass('blur');
+      map.on('click', closePopup);
+    }, 300)
   }
 
   marker.on('click', openPopup);
@@ -87,6 +99,6 @@ MapManager.prototype.addMarker = function(e, context) {
   marker.on('mouseout', marker.closePopup);
   map.on('mousemove', mouseMove);
   map.on('click', clickOnMap);
-
   this.markers.push(marker);
+  return marker;
 };

@@ -4,20 +4,54 @@
     position: fixed;
     top: 0;
     left: 0;
+    -moz-filter: blur(0px);
+    filter: blur(0px);
 }
+
+.blur {
+    -webkit-filter: blur(5px) !important;
+    -moz-filter: blur(5px) !important;
+    -o-filter: blur(5px) !important;
+    -ms-filter: blur(5px) !important;
+    filter: blur(5px) !important;
+}
+
 .leaflet-map-pane {
-    z-index: 2 !important;
+    z-index: 1 !important;
 }
 
 .chat-panel-hide {
+    z-index: 500;
+    overflow-x: hidden;
+    height: 500px;
+    border-radius: 10px;
     visibility: hidden;
     opacity: 0;
+    -webkit-transition: all 0.7s;
+    -moz-transition: all 0.7s;
+    -o-transition: all 0.7s;
     transition: all 0.7s;
     position: fixed;
     width: 400px;
     left: -50px;
     top: -50px
 }
+
+.chat-panel-hide > .input-group {
+    width: 98%;
+    margin: 10px 0 0 4px;
+}
+
+.chat-panel-hide > .panel-body {
+    overflow-y: scroll;
+    height: 82%;
+    width: 104%;
+}
+
+.chat-panel-hide > .panel-heading {
+    border-radius: 10px 10px 0 0;
+}
+
 .chat-panel-vis {
     visibility: visible;
     opacity: 1;
@@ -25,11 +59,6 @@
 
 .leaflet-google-layer {
     z-index: 1 !important;
-}
-#button {
-    position: fixed;
-    top: 100px;
-    left: 15px;
 }
 
 .hidden-element {
@@ -39,22 +68,20 @@
 
 }
 
-/*
-.custom-popup .leaflet-popup-content-wrapper {
-    background:#2c3e50;
-    color:#fff;
-    font-size:16px;
-    line-height:24px;
+.text-block {
+    word-wrap: break-word;
 }
-.custom-popup .leaflet-popup-content-wrapper a {
-    color:rgba(255,255,255,0.5);
+
+.fixed-block {
+    box-shadow: 4px 5px 27px -5px black;
+    opacity: .9;
+    width: 300px;
+    z-index: 10;
+    position: fixed;
+    top: 100px;
+    left: 15px;
 }
-.custom-popup .leaflet-popup-tip-container {
-    width:30px;
-    height:15px;
+
+textarea {
+    resize: none;
 }
-.custom-popup .leaflet-popup-tip {
-    border-left:15px solid transparent;
-    border-right:15px solid transparent;
-    border-top:15px solid #2c3e50;
-}*/

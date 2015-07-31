@@ -16,6 +16,7 @@
     "jQuery": "~2.1.4",
     "knockout": "~3.3.0",
     "leaflet": "~0.7.3",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "jquery-mousewheel": "~3.1.13"
   }
 }

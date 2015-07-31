@@ -6,6 +6,7 @@
     <link href="css/map.css" rel="stylesheet">
 
     <script src="bower_components/jQuery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-mousewheel/jquery.mousewheel.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/knockout/dist/knockout.js"></script>
     <script src="bower_components/leaflet/dist/leaflet.js"></script>
@@ -22,17 +23,33 @@
 <body>
 <div class="hidden-element mouse-glued"><img src="bower_components/leaflet/dist/images/marker-icon.png"></div>
 <div class="custom-popup" id="map"></div>
-<div class="panel panel-default chat-panel-hide">
-    <div class="panel-heading">здеся пьют девятку!!!!</div>
+<div class="panel panel-warning chat-panel-hide">
+    <div class="panel-heading" data-bind="text: theme"></div>
     <div class="panel-body">
-        <ul class="list-group">
-            <li class="list-group-item">Лох</li>
-            <li class="list-group-item">Пидр</li>
-            <li class="list-group-item">Я тебя закоментирую</li>
-            <li class="list-group-item">Мамку твоюю комментил</li>
+        <ul class="list-group" data-bind="foreach: items">
+            <li class="list-group-item text-block" data-bind="text: name + ': ' + message"></li>
         </ul>
     </div>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Вбросить еще..." data-bind="value: message">
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button" data-bind="click: submit">выброс</button>
+      </span>
+    </div>
 </div>
-<button id="button">сделать вброс</button>
+
+
+<div class="panel panel-default fixed-block">
+    <div class="panel-heading">Вбрось</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Тема..." id="theme">
+        </div>
+        <div class="form-group">
+            <textarea type="text" class="form-control" placeholder="Твой вброс..." id="message"></textarea>
+        </div>
+        <button class="btn pull-right btn-info" type="button">выброс</button>
+    </div>
+</div>
 </body>
 </html>
