@@ -3,12 +3,11 @@
  */
 var mapManager = new MapManager();
 $(document).ready(function() {
-    mapManager.init();
+  mapManager.init();
 
-    $('#button').on('click', function(e) {
-        var latlng = mapManager.map.getCenter();
-        mapManager.addMarker(latlng);
-    });
+  $('#button').on('click', function(e) {
+    mapManager.addMarker(e, this);
+  });
 
-    ko.applyBindings(model);
+  ko.applyBindings(model);
 });
