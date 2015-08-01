@@ -1,0 +1,7 @@
+{
+  "port": 1488,
+  "mongoUrl": "mongodb://localhost:27017/geo",
+  "validator": {
+    "noExtraKeywords": true
+  }
+}
