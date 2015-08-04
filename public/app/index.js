@@ -2,23 +2,40 @@
  * Created by nikolay on 29.07.15.
  */
 var mapManager = new MapManager();
+var storage = {};
+
 $(document).ready(function() {
+  if (localStorage.hasOwnProperty('name')){
+    removeBlur();
+  } else {
+    var btn = $('.started button');
+    var inp = $('.started input');
+
+    btn.on('click', function() {
+      var name = inp.val();
+      localStorage.setItem('name', name);
+      removeBlur()
+    });
+
+    inp.keypress(function(e) {
+      if (e.charCode == 13) btn.trigger('click');
+    });
+  }
   mapManager.init();
 
-  $('.fixed-block').find('button').on('click', function(e) {
-    //var point = L.point(e.pageX, e.pageY);
-    //var latlng = mapManager.map.layerPointToLatLng(point);
+  $('.fixed-block button').on('click', function(e) {
     var elements = $(this).siblings();
     var theme = elements.find('#theme');
     var message = elements.find('#message');
 
     if (theme.val() && message.val()) {
+      console.log(message.val(), theme.val());
       var marker = mapManager.addMarker({lat: 82.447, lng: -21.302}, theme.val());
 
       $('#map').one('click', function() {
         storage[marker._leaflet_id] = {
           theme: theme.val(),
-          messages: [{name:'PEDIK', message: message.val()}]
+          messages: [{name: localStorage.name, message: message.val()}]
         };
         theme.val('');
         message.val('');
@@ -43,4 +60,7 @@ $(document).ready(function() {
 });
 
 
-var storage = {};
+function removeBlur() {
+  $('.started, .cover').remove();
+  $('#map, .fixed-block').removeClass('blur');
+}

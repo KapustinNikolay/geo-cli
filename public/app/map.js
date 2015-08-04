@@ -14,8 +14,6 @@ MapManager.prototype.init = function() {
     zoomControl: false,
     doubleClickZoom: false
   });
-  this.map.dragging.disable();
-  this.map.scrollWheelZoom.disable();
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
   //this.map.addLayer(new L.Google('ROADMAP'));
 
@@ -60,7 +58,7 @@ MapManager.prototype.addMarker = function(latlng, theme) {
   function clickOnMap(e) {
     self.markerInAction = false;
     marker.dragging.disable();
-    map.off('mousemove');
+    map.off('click mousemove');
 
     self.markers.forEach(function(i) {
       i.addTo(map);
@@ -93,7 +91,7 @@ MapManager.prototype.addMarker = function(latlng, theme) {
       map.scrollWheelZoom.disable();
       $('#map, .fixed-block').addClass('blur');
       map.on('click', closePopup);
-    }, 300)
+    }, 300);
   }
 
   marker.on('click', openPopup);

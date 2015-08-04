@@ -83,12 +83,25 @@
 }
 
 .started {
+    width: 13%;
     border-radius: 10px;
     position: absolute;
     left: 40%;
     top: 30%;
     font-family: 'Glyphicons';
+    z-index: 601;
 }
+
+
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 600;
+}
+
 
 .started > .panel-heading {
     border-radius: 10px 10px 0 0;

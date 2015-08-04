@@ -6,7 +6,7 @@ var settings = require('./settings.json');
 var validator = new ZSchema(settings.validator);
 
 module.exports = function(data, schemaName) {
-  if (!schemas[schemaName]) return 'validation schema not allowed';
+  if (!schemas[schemaName]) return null//'validation schema not allowed';
   validator.validate(data, schemas[schemaName]);
   return validator.getLastErrors();
 };
@@ -18,7 +18,7 @@ var schemas = {
     properties: {
       name: {type:'string', minLength: 1, maxLength: 30},
       theme: {type:'string', minLength: 1, maxLength: 50},
-      messages:
+      messages: {type:'string', minLength: 1, maxLength: 500}
     }
   }
 };

@@ -8,7 +8,17 @@ module.exports = function (io) {
   io.on('connection', function (socket) {
     for (var i in signals) {
       if (signals.hasOwnProperty(i)) {
-        socket.on(i, function (data, res) {
+        socket.on(i, function(req, res) {
+          var handler = {
+            signal: i,
+            func: signals[i]
+          };
+
+          req = {
+            data: req,
+            socket: this
+          };
+
           var callback = !res || typeof res != 'function' ?
             function () {
               console.error('Callback is not a function');
@@ -22,10 +32,10 @@ module.exports = function (io) {
               }
             };
 
-          var validatorError = validator(data, i);
+          var validatorError = validator(req.data, handler.signal);
           if (validatorError) return callback(validatorError);
-          signals[i](data, callback);
-        });
+          handler.func(req, callback);
+        })
       }
     }
   });

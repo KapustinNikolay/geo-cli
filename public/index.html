@@ -23,18 +23,19 @@
     <title></title>
 </head>
 <body>
-<div class="custom-popup blur" id="map">
-    <div class="panel panel-default fixed-block">
-        <div class="panel-heading">Вбрось</div>
-        <div class="panel-body">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Тема..." id="theme" disabled>
-            </div>
-            <div class="form-group">
-                <textarea type="text" class="form-control" placeholder="Твой вброс..." id="message" disabled></textarea>
-            </div>
-            <button class="btn pull-right btn-info" type="button" disabled>выброс</button>
+<div class="cover"></div>
+<div class="custom-popup blur" id="map"></div>
+
+<div class="panel panel-default fixed-block blur">
+    <div class="panel-heading">Вбрось</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Тема..." id="theme">
         </div>
+        <div class="form-group">
+            <textarea type="text" class="form-control" placeholder="Твой вброс..." id="message"></textarea>
+        </div>
+        <button class="btn pull-right btn-info" type="button">выброс</button>
     </div>
 </div>
 
@@ -44,7 +45,12 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Погоняло...">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Погоняло...">
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="button">Ввод</button>
+                </span>
+            </div>
         </div>
     </div>
 </div>
