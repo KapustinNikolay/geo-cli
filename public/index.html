@@ -23,8 +23,32 @@
     <title></title>
 </head>
 <body>
-<div class="hidden-element mouse-glued"><img src="bower_components/leaflet/dist/images/marker-icon.png"></div>
-<div class="custom-popup" id="map"></div>
+<div class="custom-popup blur" id="map">
+    <div class="panel panel-default fixed-block">
+        <div class="panel-heading">Вбрось</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Тема..." id="theme" disabled>
+            </div>
+            <div class="form-group">
+                <textarea type="text" class="form-control" placeholder="Твой вброс..." id="message" disabled></textarea>
+            </div>
+            <button class="btn pull-right btn-info" type="button" disabled>выброс</button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default started">
+    <div class="panel-heading">
+        <h3>Введи свое погоняло</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Погоняло...">
+        </div>
+    </div>
+</div>
+
 <div class="panel panel-warning chat-panel-hide">
     <div class="panel-heading" data-bind="text: theme"></div>
     <div class="panel-body">
@@ -37,20 +61,6 @@
       <span class="input-group-btn">
         <button class="btn btn-info" type="button" data-bind="click: submit">выброс</button>
       </span>
-    </div>
-</div>
-
-
-<div class="panel panel-default fixed-block">
-    <div class="panel-heading">Вбрось</div>
-    <div class="panel-body">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Тема..." id="theme">
-        </div>
-        <div class="form-group">
-            <textarea type="text" class="form-control" placeholder="Твой вброс..." id="message"></textarea>
-        </div>
-        <button class="btn pull-right btn-info" type="button">выброс</button>
     </div>
 </div>
 </body>

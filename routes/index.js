@@ -9,21 +9,19 @@ module.exports = function (io) {
     for (var i in signals) {
       if (signals.hasOwnProperty(i)) {
         socket.on(i, function (data, res) {
-          var callback;
-          if (!res || typeof res != 'function') {
-            callback = function () {
+          var callback = !res || typeof res != 'function' ?
+            function () {
               console.error('Callback is not a function');
-            }
-          } else {
-            callback = function (err, data) {
+            } :
+            function (err, data) {
               if (err) {
                 console.error(err);
                 res('internal error')
               } else {
                 res(data);
               }
-            }
-          }
+            };
+
           var validatorError = validator(data, i);
           if (validatorError) return callback(validatorError);
           signals[i](data, callback);

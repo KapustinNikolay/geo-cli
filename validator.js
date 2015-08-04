@@ -12,11 +12,13 @@ module.exports = function(data, schemaName) {
 };
 
 var schemas = {
-  savePos: {
+  newItem: {
     type: 'object',
     required:['theme', 'name', 'messages'],
     properties: {
-      a: {type:'string'}
+      name: {type:'string', minLength: 1, maxLength: 30},
+      theme: {type:'string', minLength: 1, maxLength: 50},
+      messages:
     }
   }
 };

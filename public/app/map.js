@@ -14,6 +14,8 @@ MapManager.prototype.init = function() {
     zoomControl: false,
     doubleClickZoom: false
   });
+  this.map.dragging.disable();
+  this.map.scrollWheelZoom.disable();
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
   //this.map.addLayer(new L.Google('ROADMAP'));
 

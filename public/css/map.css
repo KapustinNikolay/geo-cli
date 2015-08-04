@@ -82,6 +82,18 @@
     left: 15px;
 }
 
+.started {
+    border-radius: 10px;
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    font-family: 'Glyphicons';
+}
+
+.started > .panel-heading {
+    border-radius: 10px 10px 0 0;
+}
+
 textarea {
     resize: none;
 }
