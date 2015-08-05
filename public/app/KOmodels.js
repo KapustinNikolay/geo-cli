@@ -4,19 +4,20 @@
 var model = {
   items: ko.observableArray(),
   theme: ko.observable(),
-  markerId: null,
+  _id: ko.observable(),
   message: ko.observable(),
   submit: function(e) {
-    var markerId = e.markerId;
     var message = e.message();
 
     var msg = {
-      name:'HUY',
+      _id: e._id(),
+      name: localStorage.name,
       message: message
     };
 
-    storage[markerId].messages.push(msg);
-    model.items.push(msg);
+    network.pushMessage(msg, function(result) {
+    });
+
     e.message('');
   }
 };

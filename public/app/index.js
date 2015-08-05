@@ -1,60 +1,84 @@
-/**
+/**        console.log(req.socket.rooms);
  * Created by nikolay on 29.07.15.
  */
 var mapManager = new MapManager();
 var storage = {};
 
 $(document).ready(function() {
-  if (localStorage.hasOwnProperty('name')){
-    removeBlur();
-  } else {
+  mapManager.init();
+  if (!localStorage.hasOwnProperty('name')){
     var btn = $('.started button');
     var inp = $('.started input');
 
     btn.on('click', function() {
       var name = inp.val();
       localStorage.setItem('name', name);
-      removeBlur()
+      removeBlur();
+      updateMap();
+      setInterval(updateMap, 10000);
+      mapManager.map.on('dragend', updateMap);
     });
 
     inp.keypress(function(e) {
       if (e.charCode == 13) btn.trigger('click');
     });
+  } else {
+    removeBlur();
+    updateMap();
+    setInterval(updateMap, 10000);
+    mapManager.map.on('dragend', updateMap);
   }
-  mapManager.init();
 
   $('.fixed-block button').on('click', function(e) {
+    if (this.markerInAction) return false;
+    mapManager.markerInAction = true;
+
+    mapManager.markers.forEach(function(i) {
+      mapManager.map.removeLayer(i);
+    });
+
     var elements = $(this).siblings();
     var theme = elements.find('#theme');
     var message = elements.find('#message');
 
     if (theme.val() && message.val()) {
-      console.log(message.val(), theme.val());
-      var marker = mapManager.addMarker({lat: 82.447, lng: -21.302}, theme.val());
+      var marker = mapManager.addMarker({lat: 82.447, lng: -21.302}, theme.val(), true);
 
       $('#map').one('click', function() {
-        storage[marker._leaflet_id] = {
+        var point = {
+          position: marker._latlng,
           theme: theme.val(),
           messages: [{name: localStorage.name, message: message.val()}]
         };
+
+
+        mapManager.markerInAction = false;
+        marker.dragging.disable();
+        mapManager.map.off('click mousemove');
+
+        mapManager.markers.forEach(function(i) {
+          i.addTo(mapManager.map);
+        });
+
+        network.savePos(point, marker);
         theme.val('');
         message.val('');
-        marker.on('click', markerOnClick);
       });
 
-      function markerOnClick(e) {
-        var id = e.target._leaflet_id;
-        if (storage[id]) {
-          model.markerId = id;
-          model.items.removeAll();
-          storage[id].messages.forEach(function(i) {
-            model.items.push(i);
-          });
-          model.theme(storage[id].theme);
-        }
+      function mouseMove(e) {
+        var latlng = e.latlng;
+        marker.setLatLng(latlng);
       }
+
+      mapManager.map.on('mousemove', mouseMove);
     }
   });
+
+/*  $('.chat-panel-hide').keypress(function(e) {
+    if (e.keyCode == 13) {
+      $(this).find('button').trigger('click');
+    }
+  });*/
 
   ko.applyBindings(model);
 });
@@ -63,4 +87,28 @@ $(document).ready(function() {
 function removeBlur() {
   $('.started, .cover').remove();
   $('#map, .fixed-block').removeClass('blur');
+}
+
+function updateMap() {
+  var center = mapManager.map.getCenter();
+  network.points(center, function(points) {
+    var markers = mapManager.markers;
+    var markerIds = markers.map(function(i) {
+      return i._id;
+    });
+
+    points.forEach(function(i) {
+      var index = markerIds.indexOf(i._id);
+      if (index == -1) {
+        mapManager.addMarker(i.position, i.theme, false, i._id);
+      } else markerIds.splice(index, 1);
+    });
+
+    for (var i = markers.length - 1; i >= 0; i--) {
+      if (~markerIds.indexOf(markers[i]._id)) {
+        mapManager.map.removeLayer(markers[i]);
+        markers.splice(i,1);
+      }
+    }
+  });
 }

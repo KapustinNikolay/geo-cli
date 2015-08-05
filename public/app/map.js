@@ -31,39 +31,22 @@ MapManager.prototype.init = function() {
 
 };
 
-MapManager.prototype.addMarker = function(latlng, theme) {
-  if (this.markerInAction) return false;
-  this.markerInAction = true;
-  var self = this;
+MapManager.prototype.addMarker = function(latlng, theme, isNewMarker, _id) {
   var map = this.map;
-  this.markers.forEach(function(i) {
-    map.removeLayer(i);
-  });
 
   var popup = L.popup().setContent('<p>' + theme + '</p>');
 
-  var marker = L.marker(latlng, {
-    draggable: true,
+  var markerOpt = {
+    draggable: !!isNewMarker,
     clickable: true,
     icon: this.myIcon
-  }).addTo(map).bindPopup(popup);
+  };
+
+  var marker = L.marker(latlng, markerOpt).addTo(map).bindPopup(popup);
+
+  if (_id) marker._id = _id;
 
   var element = $('.chat-panel-hide');
-
-  function mouseMove(e) {
-    var latlng = e.latlng;
-    marker.setLatLng(latlng);
-  }
-
-  function clickOnMap(e) {
-    self.markerInAction = false;
-    marker.dragging.disable();
-    map.off('click mousemove');
-
-    self.markers.forEach(function(i) {
-      i.addTo(map);
-    });
-  }
 
   function closePopup(e) {
     map.dragging.enable();
@@ -76,6 +59,7 @@ MapManager.prototype.addMarker = function(latlng, theme) {
   }
 
   function openPopup(e) {
+    network.messages(marker);
     map.panTo(e.latlng);
     setTimeout(function() {
       var body = $('body');
@@ -97,8 +81,6 @@ MapManager.prototype.addMarker = function(latlng, theme) {
   marker.on('click', openPopup);
   marker.on('mouseover', marker.openPopup);
   marker.on('mouseout', marker.closePopup);
-  map.on('mousemove', mouseMove);
-  map.on('click', clickOnMap);
   this.markers.push(marker);
   return marker;
 };

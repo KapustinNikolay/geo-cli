@@ -10,11 +10,16 @@ module.exports = function(app, io, server) {
     [
       function(next) {
         mongodb.connect(settings.mongoUrl, function(err, connect) {
-          if (connect) global.db = connect;
+          if (connect) {
+            global.ObjectId = mongodb.ObjectID;
+            global.db = connect;
+            db.collection('points').createIndex({ "position": "2dsphere" });
+          }
           next(err);
         });
       }
     ], function(err) {
+      global.io = io;
       server.listen(settings.port);
       console.log(err || "Server started on %s port", settings.port);
       require('./routes')(io);
