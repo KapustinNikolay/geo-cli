@@ -41,5 +41,6 @@ var network = {
 function addMessageToModel(data) {
   if (data._id == model._id()) {
     model.items.push(data.msg);
+    $('.chat-panel-hide .panel-body').scrollTop(10000);
   }
 }

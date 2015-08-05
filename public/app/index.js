@@ -74,11 +74,11 @@ $(document).ready(function() {
     }
   });
 
-/*  $('.chat-panel-hide').keypress(function(e) {
+  $('.chat-panel-hide input').keyup(function(e) {
     if (e.keyCode == 13) {
-      $(this).find('button').trigger('click');
+      model.submit(null, e);
     }
-  });*/
+  });
 
   ko.applyBindings(model);
 });

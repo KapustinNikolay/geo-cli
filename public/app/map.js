@@ -69,7 +69,7 @@ MapManager.prototype.addMarker = function(latlng, theme, isNewMarker, _id) {
       element.css({
         'top': y + element.outerHeight() / 2 + 'px',
         'left': x - element.width() / 2 + 'px'
-      }).addClass('chat-panel-vis');
+      }).addClass('chat-panel-vis').find('.panel-body').scrollTop(10000);
 
       map.dragging.disable();
       map.scrollWheelZoom.disable();

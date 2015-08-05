@@ -6,11 +6,11 @@ var model = {
   theme: ko.observable(),
   _id: ko.observable(),
   message: ko.observable(),
-  submit: function(e) {
-    var message = e.message();
+  submit: function(a, e) {
+    var message = this.message();
 
     var msg = {
-      _id: e._id(),
+      _id: this._id(),
       name: localStorage.name,
       message: message
     };
@@ -18,6 +18,6 @@ var model = {
     network.pushMessage(msg, function(result) {
     });
 
-    e.message('');
+    this.message('');
   }
 };
