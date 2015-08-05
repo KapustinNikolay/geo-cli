@@ -23,10 +23,10 @@ MapManager.prototype.init = function() {
     iconSize: [35, 55],
     iconAnchor: [18, 68],
     popupAnchor: [0, -65]/*,
-    shadowUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
-    shadowRetinaUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
-    shadowSize: [68, 75],
-    shadowAnchor: [22, 82]*/
+     shadowUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
+     shadowRetinaUrl: 'bower_components/leaflet/dist/images/marker-shadow.png',
+     shadowSize: [68, 75],
+     shadowAnchor: [22, 82]*/
   });
 
 };
@@ -81,6 +81,6 @@ MapManager.prototype.addMarker = function(latlng, theme, isNewMarker, _id) {
   marker.on('click', openPopup);
   marker.on('mouseover', marker.openPopup);
   marker.on('mouseout', marker.closePopup);
-  this.markers.push(marker);
+  if (!isNewMarker) this.markers.push(marker);
   return marker;
 };

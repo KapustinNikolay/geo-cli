@@ -15,7 +15,7 @@ $(document).ready(function() {
       localStorage.setItem('name', name);
       removeBlur();
       updateMap();
-      setInterval(updateMap, 10000);
+      setInterval(updateMap, 5000);
       mapManager.map.on('dragend', updateMap);
     });
 
@@ -25,7 +25,7 @@ $(document).ready(function() {
   } else {
     removeBlur();
     updateMap();
-    setInterval(updateMap, 10000);
+    setInterval(updateMap, 5000);
     mapManager.map.on('dragend', updateMap);
   }
 
@@ -51,7 +51,6 @@ $(document).ready(function() {
           messages: [{name: localStorage.name, message: message.val()}]
         };
 
-
         mapManager.markerInAction = false;
         marker.dragging.disable();
         mapManager.map.off('click mousemove');
@@ -63,6 +62,7 @@ $(document).ready(function() {
         network.savePos(point, marker);
         theme.val('');
         message.val('');
+        mapManager.markers.push(marker);
       });
 
       function mouseMove(e) {
@@ -105,7 +105,7 @@ function updateMap() {
     });
 
     for (var i = markers.length - 1; i >= 0; i--) {
-      if (~markerIds.indexOf(markers[i]._id)) {
+      if (~markerIds.indexOf(markers[i]._id) && !markers[i].options.draggable) {
         mapManager.map.removeLayer(markers[i]);
         markers.splice(i,1);
       }
