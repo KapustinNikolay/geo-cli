@@ -11,10 +11,14 @@ MapManager.prototype.init = function() {
   this.map = L.map('map',{
     center: [45.059, 39.005],
     zoom: 15,
+    markerZoomAnimation: false,
     zoomControl: false,
     doubleClickZoom: false
   });
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
+
+  var dgis = new L.DGis();
+  this.map.addLayer(dgis);
+  //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
   //this.map.addLayer(new L.Google('ROADMAP'));
 
   this.myIcon = L.icon({
