@@ -8,5 +8,10 @@ var io = require('socket.io')(server);
 var init = require('./init');
 
 app.use('/', express.static('public'));
+
+app.use('/:a', function(req, res) {
+   res.redirect('/');
+});
+
 init(app, io, server);
 
