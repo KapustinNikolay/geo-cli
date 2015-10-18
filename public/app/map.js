@@ -7,18 +7,16 @@ var MapManager = function() {
   this.markerInAction = false;
 };
 
-MapManager.prototype.init = function() {
+MapManager.prototype.init = function(lat, lng) {
   this.map = L.map('map',{
-    center: [45.059, 39.005],
+    center: [lat, lng],
     zoom: 15,
     markerZoomAnimation: false,
     zoomControl: false,
     doubleClickZoom: false
   });
 
-  var dgis = new L.DGis();
-  this.map.addLayer(dgis);
-  //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
   //this.map.addLayer(new L.Google('ROADMAP'));
 
   this.myIcon = L.icon({

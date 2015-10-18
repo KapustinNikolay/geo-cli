@@ -5,7 +5,11 @@ var mapManager = new MapManager();
 var storage = {};
 
 $(document).ready(function() {
-  mapManager.init();
+  ymaps.ready(function() {
+    var geo = ymaps.geolocation;
+    mapManager.init(geo.latitude, geo.longitude);
+  });
+
   if (!localStorage.hasOwnProperty('name')){
     var btn = $('.started button');
     var inp = $('.started input');

@@ -1,7 +1,7 @@
 /**
  * Created by nikolay on 01.08.15.
  */
-var socket = io.connect('http://192.168.9.101:4000');
+var socket = io.connect('/');
 
 var network = {
   savePos: function(point, marker) {
